@@ -2,10 +2,44 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
 </head>
+<style>
+html, body {
+	background: #CFD6D6;
+	overflow: hidden;
+}
+.headline {
+	font-family: Arial;
+	border-bottom: 2px solid #FFF;
+	padding: 5px;
+	height: 66px;
+	overflow: hidden;
+	background: #eeeef6;
+}
+.headline > div {
+	max-width: 500px;
+	margin: auto;
+}
+a.download {
+	background-color: #CE5937;
+	font-size: 15px;
+	font-weight: bold;
+	color: #FFF;
+	cursor: pointer;
+	border-radius: 10px;
+	padding: 7px 15px;
+	display: block;
+	float: left;
+	margin: 17px 5px 2px 20px;
+	text-decoration: none;
+}
+a.download:hover {
+    background-color: #9E4927;
+}
+</style>
 <body>
-<p>Test</p>
-<p><a href="7game.html">Game</a></p>
+<div class="headline">
+<a class="download" href="7game.html">Start Game</a>
+</div>
 </body>
 </html>
