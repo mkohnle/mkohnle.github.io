@@ -179,8 +179,13 @@ function roll2() {
 		updateGameArea();
 	}
 	if(player2 == true && player1 == false){
-		blueGamePiece.newX = 50*((randNum1+randNum2)-7);
-		blueGamePiece.newPos();
+		if(((randNum1+randNum2)-7) == 0){
+			blueGamePiece.x = 505;
+		}
+		else{
+			blueGamePiece.newX = 50*((randNum1+randNum2)-7);	
+			blueGamePiece.newPos();
+		}				
 		updateGameArea();
 	}	
 }
