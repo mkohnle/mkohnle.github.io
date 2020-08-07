@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<style>
+canvas {
+    border:5px solid black;
+    background-color: #f1f1f1;	
+}
+</style>
+</head>
+<body onload="startGame()">
+<script>
+
+var redGamePiece;
+var blueGamePiece;
+var dice1;
+var dice2;
+var result;
+
+var grid;
+var line;
+
+var randNum1 = 0;
+var randNum2 = 0;
+
+var player1 = true;
+var player2 = false;
+var playerTurn;
+var playerTurn2;
+
+function startGame() {
+    redGamePiece = new component(40, 40, "red", 505, 150);
+	blueGamePiece = new component(40, 40, "blue", 505, 210);
+	dice1 = new dice1(50, 50, "black", 10,10);
+	dice2 = new dice2(50, 50, "black", 70,10);	
+	result = new result(60, 50, "green", 150,10);
+	grid = new component(50, 400, "gray", 500, 0);	
+	playerTurn = new turn(20, 20, "blue", 30, 370);
+	playerTurn2 = new turn(20, 20, "red", 115, 370);
+	
+    myGameArea.start();	
+}
+
+var myGameArea = {
+    canvas : document.createElement("canvas"),
+    start : function() {
+        this.canvas.width = 1050;
+        this.canvas.height = 400;
+        this.context = this.canvas.getContext("2d");
+        document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+		updateGameArea();		
+    },
+    clear : function() {
+        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    }
+}
+
+function drawGrid(){
+	
+	ctx = myGameArea.context;
+	for(var x=50;x<1050;x+=50) {
+	  ctx.moveTo(x,100);
+	  ctx.lineTo(x,300);
+	}
+
+	for(var y=200; y<=200; y+=100) {
+	  ctx.moveTo(0,y);
+	  ctx.lineTo(1050,y);
+	}
+	ctx.strokeStyle="black";
+    ctx.stroke();	
+}
+
+function component(width, height, color, x, y) {
+    this.width = width;
+    this.height = height;
+	this.newX = 0;
+    this.newY = 0;
+    this.x = x;
+    this.y = y;    
+    this.update = function(){
+        ctx = myGameArea.context;
+        ctx.fillStyle = color;
+        ctx.fillRect(this.x, this.y, this.width, this.height);
+    }
+	this.newPos = function() {
+        this.x += this.newX;
+        this.y += this.newY;        
+    }  
+}
+
+function dice1(width, height, color, x, y) {
+    this.width = width;
+    this.height = height;
+    this.x = x;
+    this.y = y;    
+    this.update = function(){
+        ctx = myGameArea.context;
+        ctx.fillStyle = color;
+        ctx.fillRect(this.x, this.y, this.width, this.height);
+        ctx.fillStyle= "white";
+		ctx.font = "30px Arial";
+        ctx.fillText(randNum1,x+17,y+35)  
+    }
+}
+function dice2(width, height, color, x, y) {
+    this.width = width;
+    this.height = height;
+    this.x = x;
+    this.y = y;    
+    this.update = function(){
+        ctx = myGameArea.context;
+        ctx.fillStyle = color;
+        ctx.fillRect(this.x, this.y, this.width, this.height);
+        ctx.fillStyle= "white";
+		ctx.font = "30px Arial";
+        ctx.fillText(randNum2,x+17,y+35)  
+    }
+}
+function result(width, height, color, x, y) {
+    this.width = width;
+    this.height = height;
+    this.x = x;
+    this.y = y;    
+    this.update = function(){
+        ctx = myGameArea.context;
+        ctx.fillStyle = color;
+        ctx.fillRect(this.x, this.y, this.width, this.height);
+        ctx.fillStyle= "white";
+		ctx.font = "30px Arial";
+        ctx.fillText((randNum1+randNum2)-7,x+17,y+35)  
+    }
+}
+
+function turn(width, height, color, x, y) {
+    this.width = width;
+    this.height = height;
+    this.x = x;
+    this.y = y;
+	this.newColor = "white";
+    this.update = function(){
+        ctx = myGameArea.context;
+        ctx.fillStyle = color;
+        ctx.fillRect(this.x, this.y, this.width, this.height); 
+    }
+	this.newTurn = function() {
+        color = this.newColor;       
+    } 
+}
+function turnText(width, height, text, x, y) {
+    this.width = width;
+    this.height = height;
+    this.x = x;
+    this.y = y;    
+    this.update = function(){
+        ctx = myGameArea.context;
+        ctx.font = "20px Arial";
+		ctx.fillText("Rot zieht",x,y);
+    }
+}
+
+function roll1() {
+	randNum1 = Math.floor(1+Math.random()*6);
+	dice1.update();
+}
+function roll2() {
+	randNum2 = Math.floor(1+Math.random()*6);
+	dice2.update();
+	
+	if(player1 == true && player2 == false){
+		if(((randNum1+randNum2)-7) == 0){
+			redGamePiece.x = 505;
+		}
+		else{
+			redGamePiece.newX = 50*((randNum1+randNum2)-7);	
+			redGamePiece.newPos();
+		}				
+		updateGameArea();
+	}
+	if(player2 == true && player1 == false){
+		blueGamePiece.newX = 50*((randNum1+randNum2)-7);
+		blueGamePiece.newPos();
+		updateGameArea();
+	}	
+}
+function next() {
+	randNum1 = 0;
+	randNum2 = 0;
+
+	dice1.update();
+	dice2.update();
+	
+	player1 = !player1;
+	if(player1 == true){
+		playerTurn.newColor = "blue";
+		playerTurn.newTurn();
+		playerTurn.update();
+		playerTurn2.newColor = "red";
+		playerTurn2.newTurn();
+		playerTurn2.update();
+	}
+	player2 = !player2;
+	if(player2 == true){
+		playerTurn.newColor = "red";
+		playerTurn.newTurn();
+		playerTurn.update();
+		playerTurn2.newColor = "blue";
+		playerTurn2.newTurn();
+		playerTurn2.update();
+	}
+}
+
+function updateGameArea() {
+    myGameArea.clear();
+	drawGrid();
+	grid.update();
+	
+	
+    redGamePiece.update();
+	
+	blueGamePiece.update();
+	
+	dice1.update();
+	dice2.update();	
+	result.update();
+			
+	playerTurn.update();
+	playerTurn2.update();
+}
+</script>
+<div style="text-align:center;width:180px;">
+  <button style="height:60px; width:60px" onclick="roll1()">Würfel 1</button>&nbsp&nbsp&nbsp&nbsp&nbsp
+  <button style="height:60px; width:60px" onclick="roll2()">Würfel 2</button> 
+</div>
+<div style="text-align:center;width:1050px;"> 
+  <button onclick="next()">Nächster</button> 
+</div>
+<p><b></b></p>
+</body>
+</html>
