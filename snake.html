@@ -62,17 +62,37 @@ function keyPush(evt) {
 				xv=-1;yv=0;
 			}
             break;
+	case 65:
+			if(xv != 1){
+				xv=-1;yv=0;
+			}
+            break;	    
         case 38:
 			if(yv != 1){
 				xv=0;yv=-1;
 			}
             break;
+	case 87:
+			if(yv != 1){
+				xv=0;yv=-1;
+			}
+            break;	    
         case 39:
             if(xv != -1){
 				xv=1;yv=0;
 			}
             break;
+	case 68:
+            if(xv != -1){
+				xv=1;yv=0;
+			}
+            break;	    
         case 40:
+            if(yv != -1){
+				xv=0;yv=1;
+			}
+            break;
+	case 83:
             if(yv != -1){
 				xv=0;yv=1;
 			}
