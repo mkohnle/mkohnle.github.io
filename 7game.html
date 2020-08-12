@@ -7,6 +7,28 @@ canvas {
     border:5px solid black;
     background-color: #f1f1f1;	
 }
+.button {
+  display: inline-block;
+  padding: 25px 15px;
+  font-size: 14px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  color: #fff;
+  background-color: #505050;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 9px #999;
+}
+
+.button:hover {background-color: #383838}
+
+.button:active {
+  background-color: #303030;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
 </style>
 </head>
 <body onload="startGame()">
@@ -26,6 +48,7 @@ var randNum2 = 0;
 
 var player1 = true;
 var player2 = false;
+var playerTurnText = "Rot";
 var playerTurn;
 var playerTurn2;
 
@@ -56,8 +79,7 @@ var myGameArea = {
     }
 }
 
-function drawGrid(){
-	
+function drawGrid(){	
 	ctx = myGameArea.context;
 	for(var x=50;x<1050;x+=50) {
 	  ctx.moveTo(x,100);
@@ -67,9 +89,17 @@ function drawGrid(){
 	for(var y=200; y<=200; y+=100) {
 	  ctx.moveTo(0,y);
 	  ctx.lineTo(1050,y);
-	}
+	}	
 	ctx.strokeStyle="black";
     ctx.stroke();	
+}
+
+function showPlayerTurn(){	
+	ctx = myGameArea.context;
+
+	ctx.font = "30px Arial";
+	ctx.fillText(playerTurnText, 200, 380);
+	ctx.fillText("zieht", 270, 380);		
 }
 
 function component(width, height, color, x, y) {
@@ -148,17 +178,6 @@ function turn(width, height, color, x, y) {
         color = this.newColor;       
     } 
 }
-function turnText(width, height, text, x, y) {
-    this.width = width;
-    this.height = height;
-    this.x = x;
-    this.y = y;    
-    this.update = function(){
-        ctx = myGameArea.context;
-        ctx.font = "20px Arial";
-		ctx.fillText("Rot zieht",x,y);
-    }
-}
 
 function roll1() {
 	randNum1 = Math.floor(1+Math.random()*6);
@@ -186,8 +205,10 @@ function roll2() {
 			blueGamePiece.newX = 50*((randNum1+randNum2)-7);	
 			blueGamePiece.newPos();
 		}				
+		
 		updateGameArea();
 	}	
+	result.update();
 }
 function next() {
 	randNum1 = 0;
@@ -198,6 +219,7 @@ function next() {
 	
 	player1 = !player1;
 	if(player1 == true){
+		playerTurnText="Rot";
 		playerTurn.newColor = "blue";
 		playerTurn.newTurn();
 		playerTurn.update();
@@ -207,6 +229,7 @@ function next() {
 	}
 	player2 = !player2;
 	if(player2 == true){
+		playerTurnText="Blau";
 		playerTurn.newColor = "red";
 		playerTurn.newTurn();
 		playerTurn.update();
@@ -214,13 +237,14 @@ function next() {
 		playerTurn2.newTurn();
 		playerTurn2.update();
 	}
+	updateGameArea();
 }
 
 function updateGameArea() {
     myGameArea.clear();
 	drawGrid();
-	grid.update();
-	
+	showPlayerTurn();
+	grid.update();	
 	
     redGamePiece.update();
 	
@@ -228,18 +252,18 @@ function updateGameArea() {
 	
 	dice1.update();
 	dice2.update();	
-	result.update();
+	
 			
 	playerTurn.update();
 	playerTurn2.update();
 }
 </script>
 <div style="text-align:center;width:180px;">
-  <button style="height:60px; width:60px" onclick="roll1()">Würfel 1</button>&nbsp&nbsp&nbsp&nbsp&nbsp
-  <button style="height:60px; width:60px" onclick="roll2()">Würfel 2</button> 
+  <button class="button" onclick="roll1()">Würfel 1</button>
+  <button class="button" onclick="roll2()">Würfel 2</button> 
 </div>
 <div style="text-align:center;width:1050px;"> 
-  <button onclick="next()">Nächster</button> 
+  <button class="button"onclick="next()">Nächster</button> 
 </div>
 <p><b></b></p>
 </body>
