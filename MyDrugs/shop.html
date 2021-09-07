@@ -29,6 +29,22 @@ body{
   justify-content: center;
  background-color: #0e0e0e;
 }
+input[type=button] {
+    background-color: transparent;
+	color: white;
+	font-weight: bold;
+	font-size: 30px;
+	border: 0;
+	cursor: pointer;
+}
+input[type=text] {
+    background-color: transparent;
+	color: white;
+	font-weight: bold;
+	font-size: 30px;
+	border: 0;
+	width: 35px;
+}
 .wrapper{
 	margin-top: 100px;
 	align-items: center;
@@ -107,6 +123,187 @@ input[type="radio"]{
   display: none;
 }
 </style>
+
+<script>
+function isNumberKey(evt){
+    var charCode = (evt.which) ? evt.which : evt.keyCode
+    if (charCode > 31 && (charCode < 48 || charCode > 57))
+        return false;
+    return true;
+}
+
+
+function incrementValue()
+{
+    var value = parseInt(document.getElementById('number').value, 10);
+    value = isNaN(value) ? 0 : value;
+	if(value < 99){
+		value++;
+	}    
+    document.getElementById('number').value = value;
+}
+function decrementValue()
+{
+    var value = parseInt(document.getElementById('number').value, 10);
+    value = isNaN(value) ? 0 : value;
+	if(value > 1){
+		value--;
+	}   
+    document.getElementById('number').value = value;
+}
+
+function incrementValue2()
+{
+    var value = parseInt(document.getElementById('number2').value, 10);
+    value = isNaN(value) ? 0 : value;
+    if(value < 99){
+		value++;
+	}    
+    document.getElementById('number2').value = value;
+}
+function decrementValue2()
+{
+    var value = parseInt(document.getElementById('number2').value, 10);
+    value = isNaN(value) ? 0 : value;
+	if(value > 1){
+		value--;
+	}   
+    document.getElementById('number2').value = value;
+}
+
+function incrementValue3()
+{
+    var value = parseInt(document.getElementById('number3').value, 10);
+    value = isNaN(value) ? 0 : value;
+    if(value < 99){
+		value++;
+	}    
+    document.getElementById('number3').value = value;
+}
+function decrementValue3()
+{
+    var value = parseInt(document.getElementById('number3').value, 10);
+    value = isNaN(value) ? 0 : value;
+	if(value > 1){
+		value--;
+	}   
+    document.getElementById('number3').value = value;
+}
+
+function incrementValue4()
+{
+    var value = parseInt(document.getElementById('number4').value, 10);
+    value = isNaN(value) ? 0 : value;
+    if(value < 99){
+		value++;
+	}    
+    document.getElementById('number4').value = value;
+}
+function decrementValue4()
+{
+    var value = parseInt(document.getElementById('number4').value, 10);
+    value = isNaN(value) ? 0 : value;
+	if(value > 1){
+		value--;
+	}   
+    document.getElementById('number4').value = value;
+}
+
+function incrementValue5()
+{
+    var value = parseInt(document.getElementById('number5').value, 10);
+    value = isNaN(value) ? 0 : value;
+    if(value < 99){
+		value++;
+	}    
+    document.getElementById('number5').value = value;
+}
+function decrementValue5()
+{
+    var value = parseInt(document.getElementById('number5').value, 10);
+    value = isNaN(value) ? 0 : value;
+	if(value > 1){
+		value--;
+	}   
+    document.getElementById('number5').value = value;
+}
+
+function incrementValue6()
+{
+    var value = parseInt(document.getElementById('number6').value, 10);
+    value = isNaN(value) ? 0 : value;
+    if(value < 99){
+		value++;
+	}    
+    document.getElementById('number6').value = value;
+}
+function decrementValue6()
+{
+    var value = parseInt(document.getElementById('number6').value, 10);
+    value = isNaN(value) ? 0 : value;
+	if(value > 1){
+		value--;
+	}   
+    document.getElementById('number6').value = value;
+}
+
+function incrementValue7()
+{
+    var value = parseInt(document.getElementById('number7').value, 10);
+    value = isNaN(value) ? 0 : value;
+    if(value < 99){
+		value++;
+	}    
+    document.getElementById('number7').value = value;
+}
+function decrementValue7()
+{
+    var value = parseInt(document.getElementById('number7').value, 10);
+    value = isNaN(value) ? 0 : value;
+	if(value > 1){
+		value--;
+	}   
+    document.getElementById('number7').value = value;
+}
+
+function incrementValue8()
+{
+    var value = parseInt(document.getElementById('number8').value, 10);
+    value = isNaN(value) ? 0 : value;
+    if(value < 99){
+		value++;
+	}    
+    document.getElementById('number8').value = value;
+}
+function decrementValue8()
+{
+    var value = parseInt(document.getElementById('number8').value, 10);
+    value = isNaN(value) ? 0 : value;
+	if(value > 1){
+		value--;
+	}   
+    document.getElementById('number8').value = value;
+}
+
+function incrementValue9()
+{
+    var value = parseInt(document.getElementById('number9').value, 10);
+    value = isNaN(value) ? 0 : value;
+    if(value < 99){
+		value++;
+	}    
+    document.getElementById('number9').value = value;
+}
+function decrementValue9()
+{
+    var value = parseInt(document.getElementById('number9').value, 10);
+    value = isNaN(value) ? 0 : value;
+	if(value > 1){
+		value--;
+	}   
+    document.getElementById('number9').value = value;
+}
+</script>
 </head>
 <body>
 <nav>
@@ -146,7 +343,7 @@ input[type="radio"]{
    <div class="itemcards">    
         <article class="article">
           <div align="center">
-          <img width="100px" class="objett" src="donald-pill.png" alt="Donald Trump">
+          <img width="100px" class="object" src="donald-pill.png" alt="Donald Trump">
           </div>
          <div align="center">
           <h4 class="titlee">STABLE GENIUS</h4>
@@ -154,7 +351,7 @@ input[type="radio"]{
           <br><br>
           <p class="instock">In stock</p>
           <br><br>
-          <a class="quantity"><b class="less">-</b></a><b class="numaro">1</b><a class="quantity-plus"><b class="less">+</b></a>
+          <a class="quantity"><b class="less"><input type="button" onclick="decrementValue()" value="-" /></b></a><b class="number"><input type="text" id="number" maxlength="2" value="1" onkeypress="return isNumberKey(event)"/></b><a class="quantity-plus"><b class="less"><input type="button" onclick="incrementValue()" value="+" /></b></a>
           <br><br><br><br>
           <a href="LOL" class="addtocart">Add to Cart</a>
           <br><br><br>
@@ -163,7 +360,7 @@ input[type="radio"]{
         
          <article class="article">
         <div align="center">  
-          <img width="150" class="objett" src="grenade-pill.png" alt="Donald Trump">
+          <img width="150" class="object" src="grenade-pill.png" alt="Donald Trump">
         </div>  
       <div align="center">
           <h4 class="titlee">BIG BOOMER</h4>
@@ -171,7 +368,7 @@ input[type="radio"]{
           <br><br>
           <p class="instock">In stock</p>
           <br><br>
-          <a class="quantity"><b class="less">-</b></a><b class="numaro">1</b><a class="quantity-plus"><b class="less">+</b></a>
+          <a class="quantity"><b class="less"><input type="button" onclick="decrementValue2()" value="-" /></b></a><b class="number"><input type="text" id="number2" maxlength="2" value="1" onkeypress="return isNumberKey(event)"/></b><a class="quantity-plus"><b class="less"><input type="button" onclick="incrementValue2()" value="+" /></b></a>
           <br><br><br><br>
           <a href="LOL" class="addtocart">Add to Cart</a>
           <br><br><br>
@@ -180,7 +377,7 @@ input[type="radio"]{
        
          <article class="article">
         <div align="center">  
-          <img width="150" class="objett" src="green_pill.png" alt="Donald Trump">
+          <img width="150" class="object" src="green_pill.png" alt="Donald Trump">
         </div>  
       <div align="center">
           <h4 class="titlee">GREEN SNOWFLAKE</h4>
@@ -188,7 +385,7 @@ input[type="radio"]{
           <br><br>
           <p class="instock">In stock</p>
           <br><br>
-          <a class="quantity"><b class="less">-</b></a><b class="numaro">1</b><a class="quantity-plus"><b class="less">+</b></a>
+          <a class="quantity"><b class="less"><input type="button" onclick="decrementValue3()" value="-" /></b></a><b class="number"><input type="text" id="number3" maxlength="2" value="1" onkeypress="return isNumberKey(event)"/></b><a class="quantity-plus"><b class="less"><input type="button" onclick="incrementValue3()" value="+" /></b></a>
           <br><br><br><br>
           <a href="LOL" class="addtocart">Add to Cart</a>
           <br><br><br>
@@ -197,7 +394,7 @@ input[type="radio"]{
         
          <article class="article">
         <div align="center">  
-          <img width="150" class="objett" src="purple_pill.png" alt="Donald Trump">
+          <img width="150" class="object" src="purple_pill.png" alt="Donald Trump">
         </div>  
       <div align="center">
           <h4 class="titlee">PURPLE FLOWER</h4>
@@ -205,7 +402,7 @@ input[type="radio"]{
           <br><br>
           <p class="instock">In stock</p>
           <br><br>
-          <a class="quantity"><b class="less">-</b></a><b class="numaro">1</b><a class="quantity-plus"><b class="less">+</b></a>
+          <a class="quantity"><b class="less"><input type="button" onclick="decrementValue4()" value="-" /></b></a><b class="number"><input type="text" id="number4" maxlength="2" value="1" onkeypress="return isNumberKey(event)"/></b><a class="quantity-plus"><b class="less"><input type="button" onclick="incrementValue4()" value="+" /></b></a>
           <br><br><br><br>
           <a href="LOL" class="addtocart">Add to Cart</a>
           <br><br><br>
@@ -214,7 +411,7 @@ input[type="radio"]{
        
          <article class="article">
         <div align="center">  
-          <img width="150" class="objett" src="blue_pill.png" alt="Donald Trump">
+          <img width="150" class="object" src="blue_pill.png" alt="Donald Trump">
         </div>  
       <div align="center">
           <h4 class="titlee">BLUE CLOVER</h4>
@@ -222,7 +419,7 @@ input[type="radio"]{
           <br><br>
           <p class="instock">In stock</p>
           <br><br>
-          <a class="quantity"><b class="less">-</b></a><b class="numaro">1</b><a class="quantity-plus"><b class="less">+</b></a>
+          <a class="quantity"><b class="less"><input type="button" onclick="decrementValue5()" value="-" /></b></a><b class="number"><input type="text" id="number5" maxlength="2" value="1" onkeypress="return isNumberKey(event)"/></b><a class="quantity-plus"><b class="less"><input type="button" onclick="incrementValue5()" value="+" /></b></a>
           <br><br><br><br>
           <a href="LOL" class="addtocart">Add to Cart</a>
           <br><br><br>
@@ -231,7 +428,7 @@ input[type="radio"]{
         
          <article class="article">
         <div align="center">  
-          <img width="150" class="objett" src="red_pill.png" alt="Donald Trump">
+          <img width="150" class="object" src="red_pill.png" alt="Donald Trump">
         </div>  
       <div align="center">
           <h4 class="titlee">RED PILL</h4>
@@ -239,7 +436,7 @@ input[type="radio"]{
           <br><br>
           <p class="instock">In stock</p>
           <br><br>
-          <a class="quantity"><b class="less">-</b></a><b class="numaro">1</b><a class="quantity-plus"><b class="less">+</b></a>
+          <a class="quantity"><b class="less"><input type="button" onclick="decrementValue6()" value="-" /></b></a><b class="number"><input type="text" id="number6" maxlength="2" value="1" onkeypress="return isNumberKey(event)"/></b><a class="quantity-plus"><b class="less"><input type="button" onclick="incrementValue6()" value="+" /></b></a>
           <br><br><br><br>
           <a href="LOL" class="addtocart">Add to Cart</a>
           <br><br><br>
@@ -248,7 +445,7 @@ input[type="radio"]{
        
          <article class="article">
         <div align="center">  
-          <img width="150" class="objett" src="yellow_pill.png" alt="Donald Trump">
+          <img width="150" class="object" src="yellow_pill.png" alt="Donald Trump">
         </div>  
       <div align="center">
           <h4 class="titlee">CONFUSED</h4>
@@ -256,7 +453,7 @@ input[type="radio"]{
           <br><br>
           <p  class="instock">In stock</p>
           <br><br>
-          <a class="quantity"><b class="less">-</b></a><b class="numaro">1</b><a class="quantity-plus"><b class="less">+</b></a>
+          <a class="quantity"><b class="less"><input type="button" onclick="decrementValue7()" value="-" /></b></a><b class="number"><input type="text" id="number7" maxlength="2" value="1" onkeypress="return isNumberKey(event)"/></b><a class="quantity-plus"><b class="less"><input type="button" onclick="incrementValue7()" value="+" /></b></a>
           <br><br><br><br>
           <a href="LOL" class="addtocart">Add to Cart</a>
           <br><br><br>
@@ -265,7 +462,7 @@ input[type="radio"]{
        
          <article class="article">
         <div align="center">  
-          <img width="150" class="objett" src="pink_pill.png" alt="Donald Trump">
+          <img width="150" class="object" src="pink_pill.png" alt="Donald Trump">
         </div>  
       <div align="center">
           <h4 class="titlee">SMILING DEVIL</h4>
@@ -273,7 +470,7 @@ input[type="radio"]{
           <br><br>
           <p class="instock">In stock</p>
           <br><br>
-          <a class="quantity"><b class="less">-</b></a><b class="numaro">1</b><a class="quantity-plus"><b class="less">+</b></a>
+          <a class="quantity"><b class="less"><input type="button" onclick="decrementValue8()" value="-" /></b></a><b class="number"><input type="text" id="number8" maxlength="2" value="1" onkeypress="return isNumberKey(event)"/></b><a class="quantity-plus"><b class="less"><input type="button" onclick="incrementValue8()" value="+" /></b></a>
           <br><br><br><br>
           <a href="LOL" class="addtocart">Add to Cart</a>
           <br><br><br>
@@ -282,7 +479,7 @@ input[type="radio"]{
         
          <article class="article">
         <div align="center">  
-          <img width="150" class="objettt" src="100.png" alt="Donald Trump">
+          <img width="150" class="objectt" src="100.png" alt="Donald Trump">
         </div>  
       <div align="center">
           <h4 class="titlee">#100</h4>
@@ -290,7 +487,7 @@ input[type="radio"]{
           <br><br>
           <p class="instock">In stock</p>
           <br><br>
-          <a class="quantity"><b class="less">-</b></a><b class="numaro">1</b><a class="quantity-plus"><b class="less">+</b></a>
+          <a class="quantity"><b class="less"><input type="button" onclick="decrementValue9()" value="-" /></b></a><b class="number"><input type="text" id="number9" maxlength="2" value="1" onkeypress="return isNumberKey(event)"/></b><a class="quantity-plus"><b class="less"><input type="button" onclick="incrementValue9()" value="+" /></b></a>
           <br><br><br><br>
           <a href="LOL" class="addtocart">Add to Cart</a>
           <br><br><br>
@@ -339,7 +536,7 @@ input[type="radio"]{
       border: solid 1px #c5c5c5;
      }
 
-     .numaro{
+     .number{
       color: white;
       font-size: 35px;
       margin-left:    32.4px;
@@ -351,7 +548,7 @@ input[type="radio"]{
       border-radius: 2vh;
      }
       .quantity-plus{
-      margin-left: 40px;
+      margin-left: 30px;
       text-align: center;
       padding:  7px 17.4PX;
       background: #0e0e0e;
@@ -388,11 +585,11 @@ input[type="radio"]{
 .titlee{
   
 }
-.objett{
+.object{
   margin-top: 30px;
   
 }
-.objettt{
+.objectt{
   margin-top: 10px;
   
 }
