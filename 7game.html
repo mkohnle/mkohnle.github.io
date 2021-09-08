@@ -1,7 +1,12 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<html lang="en">
+<title>SNAKE</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <style>
 canvas {
     border:5px solid black;
@@ -29,9 +34,24 @@ canvas {
   box-shadow: 0 5px #666;
   transform: translateY(4px);
 }
+
+body {font-family: "Lato", sans-serif}
+.mySlides {display: none}
 </style>
-</head>
+<script>
+$(function() {
+    $("#navigation").load("nav.html");
+});
+</script>
 <body onload="startGame()">
+
+<!-- Navbar -->
+
+<div id="navigation"></div>
+
+<!-- Page content -->
+<br><br><br><br>
+
 <script>
 
 var redGamePiece;
