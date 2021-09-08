@@ -37,7 +37,7 @@ body{
 
 
 </head>
-<body>
+<body onclick="playAudio()">
 
 <video style="display: block; margin-left: auto; margin-right: auto; width: 70%;" width="960" height="720" autoplay muted loop>
   <source src="hacking1.mp4" type="video/mp4">
@@ -45,6 +45,23 @@ body{
 <br><br>
 <img style="display: block; margin-left: auto; margin-right: auto" src="downloading.gif" />         
 
+<audio src="bgmusic.mp3" id="myaudio" loop>
+</audio>
+
+
 </body>
+<script>
+ window.addEventListener("DOMContentLoaded", event => {
+  const audio = document.querySelector("audio");
+  audio.volume = 0.1;
+  audio.play();
+});
+
+function playAudio() {
+	const audio = document.querySelector("audio");
+	audio.volume = 0.1;
+	audio.play();
+}
+</script>
 
 </html>
