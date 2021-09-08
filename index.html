@@ -1,48 +1,48 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-</head>
+<html lang="en">
+<title>HOME</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="script.js"></script>
 <style>
-html, body {
-	background: #CFD6D6;
-	overflow: hidden;
-}
-.headline {
-	font-family: Arial;
-	border-bottom: 2px solid #FFF;
-	padding: 5px;
-	height: 66px;
-	overflow: hidden;
-	background: #eeeef6;
-}
-.headline > div {
-	max-width: 500px;
-	margin: auto;
-}
-a.download {
-	background-color: #CE5937;
-	font-size: 15px;
-	font-weight: bold;
-	color: #FFF;
-	cursor: pointer;
-	border-radius: 10px;
-	padding: 7px 15px;
-	display: block;
-	float: left;
-	margin: 17px 5px 2px 20px;
-	text-decoration: none;
-}
-a.download:hover {
-    background-color: #9E4927;
-}
+body {font-family: "Lato", sans-serif}
+.mySlides {display: none}
 </style>
 <body>
-<div class="headline">
-<h1>Eine Website</h1>
+
+<!-- Navbar -->
+<div class="w3-top">
+  <div class="w3-bar w3-black w3-card">
+    <a class="w3-bar-item w3-button w3-padding-large w3-hide-medium w3-hide-large w3-right" href="javascript:void(0)" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+    <a href="./" class="w3-bar-item w3-button w3-padding-large">HOME</a>
+    <a href="snake" class="w3-bar-item w3-button w3-padding-large w3-hide-small">SNAKE</a>
+
+    <!--<a href="javascript:void(0)" class="w3-padding-large w3-hover-red w3-hide-small w3-right"><i class="fa fa-search"></i></a>-->
+  </div>
 </div>
-<div class="headline">
-<a class="download" href="snake.html">Snake</a>
+
+<!-- Navbar on small screens (remove the onclick attribute if you want the navbar to always show on top of the content when clicking on the links) -->
+<div id="navDemo" class="w3-bar-block w3-black w3-hide w3-hide-large w3-hide-medium w3-top" style="margin-top:46px">
+  <a href="snake" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">SNAKE</a>
 </div>
+
+<!-- Page content -->
+<div class="w3-content" style="max-width:2000px;margin-top:46px">
+
+  <!-- The Band Section -->
+  <div class="w3-container w3-content w3-center w3-padding-64" style="max-width:800px" id="band">
+    <h2 class="w3-wide">Eine Website</h2>
+    <p class="w3-opacity"><i>Mit Scherz, Spaß, Ulk und Jokus</i></p>
+    <p class="w3-justify"></p>
+
+
+  
+<!-- End Page Content -->
+</div>
+
+
 </body>
 </html>
