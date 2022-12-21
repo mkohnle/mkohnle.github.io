@@ -76,10 +76,13 @@ html, body {
 	height: 100%;
 }
 
+.imageBlock {
+	padding-top: 20px;
+}
+
 .leftHalf {
 	background: url(public/images/limesmuseum.jpg) no-repeat center;
-	background-size: auto 100%;
-	top: 10%;
+	background-size: auto 100%;		
 	width: 50%;
 	position: absolute;
 	left: 0px;
@@ -88,23 +91,29 @@ html, body {
 
 .rightHalf {
 	background: url(public/images/thermalbad.jpg) no-repeat center;
-	background-size: auto 100%;
-	top: 10%;
+	background-size: auto 100%;	
 	width: 50%;
 	position: absolute;
 	right: 0px;
-	height: 80%;
+	height: 80%;	
 }
 
 .top {
-	text-align: center; 
+	color: white;
+	font-size: 30px;
+	text-align: center;
 }
 
-.bottom {
-	position: fixed;     
-	text-align: center;    
-	bottom: 0px; 
+.parent {
+    position: relative;
+  }
+
+.bottom {  	 
+	position: absolute;
+	padding-bottom: 20px;
+    bottom: 0; 
 	width: 100%;
+	left: 0; 
 }
 
 .bg2 {
@@ -118,6 +127,7 @@ html, body {
 	background: -o-radial-gradient(center, ellipse cover, #d35448 0%,#4a110c 100%); /* Opera 12+ */
 	background: -ms-radial-gradient(center, ellipse cover, #d35448 0%,#4a110c 100%); /* IE10+ */
 	background: radial-gradient(ellipse at center, #d35448 0%,#4a110c 100%); /* W3C */
+	position: relative;
 }
 
 .bg {
