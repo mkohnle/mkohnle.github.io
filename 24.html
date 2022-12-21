@@ -12,13 +12,42 @@
 <body>
 	<div class="bg">
 		<div class="centerer">
-			<a href="#" class="button" onClick="clickVideo()">Press me!</a>
+			<a href="#" class="button" onClick="playVideo();">Press me!</a>
+			<video controls class="toggleVideo">
+			<source src="public/videos/main2.mp4">
+			</video>
 		</div>
 	</div>
 <script>
 function clickVideo(){
- document.body.innerHTML = "<div class='bg'><div class='centerer'><div class='button'><video controls><source src='public/videos/main2.mp4' type='video/mp4'></video></div></div></div>"
+	document.body.innerHTML = "<div class='bg'><div class='centerer'><div class='button'><video controls><source src='public/videos/main2.mp4' type='video/mp4'></video></div></div></div>"
 }
+
+function playVideo(){
+	toggleVideo.style.display = "inline";
+	button.style.display = "none";
+	var elem = document.getElementsByTagName('video')[0];
+	if (elem.requestFullscreen) {
+	elem.requestFullscreen();
+	}else if (elem.mozRequestFullScreen) {
+	elem.mozRequestFullScreen();
+	}else if (elem.webkitRequestFullscreen) {
+	elem.webkitRequestFullscreen();
+	}else if (elem.msRequestFullscreen) { 
+	elem.msRequestFullscreen();
+	}else{
+	alert("Full screen not supported");
+	return;
+	}
+	elem.play();
+}
+
+var toggleVideo = document.getElementsByClassName("toggleVideo")[0];
+	toggleVideo.style.display = "none";
+	
+var button = document.getElementsByClassName("button")[0];
+	button.style.display = "inline";
+   
 </script>
 
 
