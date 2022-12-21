@@ -118,6 +118,8 @@ html, body {
 	background: -o-radial-gradient(center, ellipse cover, #d35448 0%,#4a110c 100%); /* Opera 12+ */
 	background: -ms-radial-gradient(center, ellipse cover, #d35448 0%,#4a110c 100%); /* IE10+ */
 	background: radial-gradient(ellipse at center, #d35448 0%,#4a110c 100%); /* W3C */
+}	
+
 .bg {
 	width: 100%;
 	height: 100%;
