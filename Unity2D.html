@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Anleitung - Einfaches 2D-Plattformer-Spiel</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        h2 {
+            margin-bottom: 10px;
+        }
+        p {
+            margin-top: 0;
+        }
+        code {
+            background-color: #f2f2f2;
+            padding: 2px 4px;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Einfaches 2D-Plattformer-Spiel - Anleitung</h1>
+
+    <h2>Schritt 1: Szenen-Setup</h2>
+    <ul>
+        <li>Erstelle ein neues 2D-Projekt in Unity und benenne es "SimplePlatformer".</li>
+        <li>Erstelle eine neue Szene und benenne sie "MainScene".</li>
+        <li>Füge einen 2D-Kamera in die Szene ein und positioniere sie so, dass sie den Spielbereich gut abdeckt.</li>
+        <li>Erstelle einen leeren GameObject und benenne es "Player".</li>
+        <li>Füge dem GameObject einen Rigidbody2D-Komponenten hinzu und aktiviere die Option "Use Full Kinematic Contacts".</li>
+        <li>Füge dem GameObject einen BoxCollider2D-Komponenten hinzu und passe die Größe an die Größe des Charakters an.</li>
+        <li>Erstelle ein 2D-Sprite für den Charakter und ziehe es auf das "Player"-GameObject. Stelle sicher, dass der Sprite die richtige Größe hat.</li>
+    </ul>
+
+    <h2>Schritt 2: Charaktersteuerung</h2>
+    <ul>
+        <li>Erstelle ein neues leeres C#-Skript namens "PlayerController" und füge es dem "Player"-GameObject hinzu.</li>
+        <li>Öffne das Skript in deinem bevorzugten Code-Editor und füge den folgenden Code hinzu:</li>
+    </ul>
+    <pre><code>
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PlayerController : MonoBehaviour
+{
+    public float moveSpeed = 5f;
+    public float jumpForce = 10f;
+    private bool isGrounded = false;
+    private Rigidbody2D rb;
+
+    void Start()
+    {
+        rb = GetComponent<Rigidbody2D>();
+    }
+
+    void Update()
+    {
+        float moveHorizontal = Input.GetAxis("Horizontal");
+        Vector2 movement = new Vector2(moveHorizontal * moveSpeed, rb.velocity.y);
+        rb.velocity = movement;
+
+        if (Input.GetButtonDown("Jump") && isGrounded)
+        {
+            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            isGrounded = false;
+        }
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isGrounded = true;
+        }
+    }
+}
+    </code></pre>
+
+    <h2>Schritt 3: Input-Einstellungen</h2>
+    <ul>
+        <li>Öffne die Unity-Einstellungen und gehe zu "Edit" &gt; "Project Settings" &gt; "Input".</li>
+        <li>Erstelle zwei neue Achsen:
+            <ul>
+                <li><strong>Horizontal:</strong> Positive Taste: "d", Negative Taste: "a", Gravitation: 3, Sensitivity: 3.</li>
+                <li><strong>Jump:</strong> Positive Taste: "space", Gravitation: 3, Sensitivity: 3.</li>
+            </ul>
+        </li>
+    </ul>
+
+    <h2>Schritt 4: Level-Design</h2>
+    <ul>
+        <li>Erstelle einen neuen leeren GameObject namens "LevelManager".</li>
+        <li>Erstelle ein 2D-Sprite für den Boden (z.B. eine grüne Plattform) und ziehe es unter den "LevelManager". Füge dem Sprite einen BoxCollider2D-Komponenten hinzu und passe die Größe an, um eine Plattform zu erstellen.</li>
+        <li>Erstelle ein paar Münzen und füge sie der Szene hinzu, um sie als Sammelobjekte zu verwenden.</li>
+    </ul>
+
+    <h2>Schritt 5: Münzen-Skript</h2>
+    <ul>
+        <li>Erstelle ein neues leeres C#-Skript namens "Coin" und füge es den Münzen-GameObjects hinzu.</li>
+        <li>Öffne das Skript in deinem bevorzugten Code-Editor und füge den folgenden Code hinzu:</li>
+    </ul>
+    <pre><code>
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Coin : MonoBehaviour
+{
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            Destroy(gameObject);
+        }
+    }
+}
+    </code></pre>
+
+    <p>Speichere alle Änderungen, wechsle zurück zu Unity und führe die Szene "MainScene" aus. Der Spieler sollte jetzt in der Lage sein, sich horizontal zu bewegen und durch Drücken der Leertaste zu springen. Wenn er eine Münze berührt, wird sie zerstört.</p>
+</body>
+</html>

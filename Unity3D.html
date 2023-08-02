@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Anleitung - Einfaches 3D-Spiel</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        h2 {
+            margin-bottom: 10px;
+        }
+        p {
+            margin-top: 0;
+        }
+        code {
+            background-color: #f2f2f2;
+            padding: 2px 4px;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Einfaches 3D-Spiel - Anleitung</h1>
+
+    <h2>Schritt 1: Szenen-Setup</h2>
+    <ul>
+        <li>Erstelle ein neues 3D-Projekt in Unity und benenne es "SimpleEndlessRunner".</li>
+        <li>Erstelle eine neue Szene und benenne sie "MainScene".</li>
+        <li>Füge eine Main Camera zur Szene hinzu und positioniere sie so, dass sie den Spielbereich gut abdeckt.</li>
+        <li>Erstelle einen leeren GameObject und benenne ihn "Player".</li>
+        <li>Füge dem GameObject eine Character Controller-Komponente hinzu.</li>
+    </ul>
+
+    <h2>Schritt 2: Charaktermodellierung</h2>
+    <ul>
+        <li>Erstelle oder importiere ein einfaches 3D-Modell für den Charakter in Unity. Du kannst kostenlose Modelle aus dem Asset Store verwenden oder dein eigenes Modell erstellen.</li>
+        <li>Ziehe das 3D-Modell auf das "Player"-GameObject. Stelle sicher, dass es sich auf dem Boden befindet und die richtige Skalierung hat.</li>
+    </ul>
+
+    <h2>Schritt 3: Charaktersteuerung</h2>
+    <ul>
+        <li>Erstelle ein neues leeres C#-Skript namens "PlayerController" und füge es dem "Player"-GameObject hinzu.</li>
+        <li>Öffne das Skript in deinem bevorzugten Code-Editor und füge den folgenden Code hinzu:</li>
+    </ul>
+    <pre><code>
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PlayerController : MonoBehaviour
+{
+    public float moveSpeed = 10f;
+    public float jumpForce = 8f;
+    public float gravity = 20f;
+    private Vector3 moveDirection = Vector3.zero;
+    private CharacterController characterController;
+
+    void Start()
+    {
+        characterController = GetComponent<CharacterController>();
+    }
+
+    void Update()
+    {
+        // Bewegung des Charakters
+        float horizontalInput = Input.GetAxis("Horizontal");
+        moveDirection = new Vector3(horizontalInput * moveSpeed, moveDirection.y, 0f);
+
+        // Sprung des Charakters
+        if (Input.GetButtonDown("Jump") && characterController.isGrounded)
+        {
+            moveDirection.y = jumpForce;
+        }
+
+        // Anwendung der Schwerkraft
+        moveDirection.y -= gravity * Time.deltaTime;
+
+        // Bewegung des Charakters
+        characterController.Move(moveDirection * Time.deltaTime);
+    }
+}
+    </code></pre>
+
+    <h2>Schritt 4: Input-Einstellungen</h2>
+    <ul>
+        <li>Öffne die Unity-Einstellungen und gehe zu "Edit" &gt; "Project Settings" &gt; "Input".</li>
+        <li>Erstelle eine neue Achse:
+            <ul>
+                <li><strong>Horizontal:</strong> Positive Taste: "d", Negative Taste: "a", Gravitation: 3, Sensitivity: 3.</li>
+                <li><strong>Jump:</strong> Positive Taste: "space", Gravitation: 3, Sensitivity: 3.</li>
+            </ul>
+        </li>
+    </ul>
+
+    <h2>Schritt 5: Level-Design</h2>
+    <ul>
+        <li>Erstelle einen leeren GameObject namens "LevelManager".</li>
+        <li>Erstelle einen großen, flachen Boden als Boden für das Level. Füge ihm ein Mesh Collider-Komponente hinzu, um eine Kollision zu ermöglichen.</li>
+        <li>Erstelle ein paar Münzen als Sammelobjekte für den Spieler.</li>
+    </ul>
+
+    <h2>Schritt 6: Münzen-Skript</h2>
+    <ul>
+        <li>Erstelle ein neues leeres C#-Skript namens "Coin" und füge es den Münzen-GameObjects hinzu.</li>
+        <li>Öffne das Skript in deinem bevorzugten Code-Editor und füge den folgenden Code hinzu:</li>
+    </ul>
+    <pre><code>
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Coin : MonoBehaviour
+{
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            Destroy(gameObject);
+        }
+    }
+}
+    </code></pre>
+
+    <p>Speichere alle Änderungen und führe die Szene "MainScene" aus. Der Spieler sollte jetzt in der Lage sein, sich horizontal zu bewegen und durch Drücken der Leertaste zu springen. Wenn er eine Münze berührt, wird sie zerstört.</p>
+</body>
+</html>
