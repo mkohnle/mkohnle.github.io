@@ -9,10 +9,14 @@
             font-family: Arial, sans-serif;
             text-align: center;
             background-color: #fff0f0;
+            margin: 0;
+            padding: 0;
+            overflow: hidden; /* Hide overflowing hearts */
         }
         h1 {
-			font-size: 40px;
+            font-size: 40px;
             color: #ff6f61;
+            margin-top: 20px;
         }
         p {
             font-size: 18px;
@@ -23,7 +27,7 @@
             height: 400px;
             border: none;
         }
-		#hiddenText {
+        #hiddenText {
             display: none;
             font-weight: bold;
         }
@@ -35,6 +39,44 @@
             font-size: 16px;
             cursor: pointer;
         }
+        #gameButton {
+            background-color: #ff6f61;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+			margin-top: 10px;
+        }
+        #game-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none;
+            z-index: 1; /* Ensure the hearts are above other content */
+        }
+        #game {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+        .heart {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            animation: fall-rotate 8s linear infinite;
+            cursor: pointer;
+        }
+        @keyframes fall-rotate {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
     </style>
 </head>
 <body>
@@ -44,19 +86,23 @@
     <main>
         <p>I just wanted to take a moment to say...</p>
         <h2><strong>I love you ganz arg!!!</strong></h2>
-		<button id="revealButton">Spoiler</button>
+        <button id="revealButton">Spoiler</button>
         <p id="hiddenText">Mehr als du mich liebst 😡</p>
         <p>You mean the world to me, and I'm so grateful to have you in my life.</p>
-        
         <iframe src="https://www.youtube.com/embed/LK3C9IytrLI" allowfullscreen></iframe>
+        <div><button id="gameButton">Play Game</button></div>
     </main>
+	<h2 id="message"></h2>
     <footer>
         <p>Created with ❤️ by Marcelo Schatzolo</p>
     </footer>
-	<script>
+    <div id="game-container">
+        <div id="game"></div>		
+    </div>
+    <script>
         var buttonClicked = false;
-        
-        document.getElementById("revealButton").addEventListener("click", function() {
+
+        document.getElementById("revealButton").addEventListener("click", function () {
             var hiddenText = document.getElementById("hiddenText");
             if (!buttonClicked) {
                 hiddenText.style.display = "block";
@@ -66,6 +112,46 @@
                 buttonClicked = false;
             }
         });
+
+        const messages = [
+            "I love you more than words can express",
+            "You are my sunshine on even the cloudiest days",
+            "With you, every day is a new adventure",
+            "You make every moment memorable",
+            "You are the love of my life",
+            "You complete me in every way",
+            "My love for you grows stronger with each passing year",
+            "You are the best thing that ever happened to me",
+            "Our love story is my favorite",
+            "You are my forever and always"
+        ];
+
+        document.getElementById("gameButton").addEventListener("click", function () {
+            document.getElementById("game-container").style.display = "block";
+            createHearts();
+			document.getElementById("gameButton").style.display = "none"; // Hide the button after clicking
+        });
+
+        function createHearts() {
+            const game = document.getElementById("game");
+
+            for (let i = 0; i < 10; i++) {
+                const heart = document.createElement("img");
+                heart.classList.add("heart");
+                heart.src = "heart.png"; // Replace with the path to your heart image
+                heart.style.left = `${Math.random() * 100}%`;
+                heart.style.animationDuration = `${Math.random() * 6 + 5}s`; // Slower falling (5-10 seconds)
+
+                heart.addEventListener("click", function() {
+                    const message = messages[i];
+                    document.getElementById("message").textContent = message;
+                    heart.style.display = "none";
+                    document.getElementById("message").style.display = "block";
+                });
+
+                game.appendChild(heart);
+            }
+        }
     </script>
 </body>
 </html>
