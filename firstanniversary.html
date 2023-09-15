@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Anniversary!</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #fff0f0;
+        }
+        h1 {
+			font-size: 40px;
+            color: #ff6f61;
+        }
+        p {
+            font-size: 18px;
+            color: #333;
+        }
+        iframe {
+            width: 80%;
+            height: 400px;
+            border: none;
+        }
+		#hiddenText {
+            display: none;
+            font-weight: bold;
+        }
+        #revealButton {
+            background-color: #ff6f61;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Happy Anniversary!</h1>
+    </header>
+    <main>
+        <p>I just wanted to take a moment to say...</p>
+        <h2><strong>I love you ganz arg!!!</strong></h2>
+		<button id="revealButton">Spoiler</button>
+        <p id="hiddenText">Mehr als du mich liebst 😡</p>
+        <p>You mean the world to me, and I'm so grateful to have you in my life.</p>
+        
+        <iframe src="https://www.youtube.com/embed/LK3C9IytrLI" allowfullscreen></iframe>
+    </main>
+    <footer>
+        <p>Created with ❤️ by Marcelo Schatzolo</p>
+    </footer>
+	<script>
+        var buttonClicked = false;
+        
+        document.getElementById("revealButton").addEventListener("click", function() {
+            var hiddenText = document.getElementById("hiddenText");
+            if (!buttonClicked) {
+                hiddenText.style.display = "block";
+                buttonClicked = true;
+            } else {
+                hiddenText.style.display = "none";
+                buttonClicked = false;
+            }
+        });
+    </script>
+</body>
+</html>
