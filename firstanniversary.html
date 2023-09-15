@@ -77,6 +77,19 @@
                 transform: translateY(100vh) rotate(360deg);
             }
         }
+		#message {
+			font-size: 24px; /* Increase font size */
+			color: #fff; /* Change text color to white */
+			background-color: #ff6f61; /* Add a background color */
+			padding: 10px; /* Add padding for better visibility */
+			margin: 0 auto; /* Center horizontally */
+			width: 80%; /* Adjust the width */
+			opacity: 0; /* Initially set opacity to 0 */
+			transition: opacity 0.5s ease-in-out; /* Add a smooth transition */
+		}
+		#message.active {
+			opacity: 1; /* Change opacity to 1 to fade in */
+		}
     </style>
 </head>
 <body>
@@ -84,6 +97,7 @@
         <h1>Happy Anniversary!</h1>
     </header>
     <main>
+		<h2 id="message"></h2>
         <p>I just wanted to take a moment to say...</p>
         <h2><strong>I love you ganz arg!!!</strong></h2>
         <button id="revealButton">Spoiler</button>
@@ -91,8 +105,7 @@
         <p>You mean the world to me, and I'm so grateful to have you in my life.</p>
         <iframe src="https://www.youtube.com/embed/LK3C9IytrLI" allowfullscreen></iframe>
         <div><button id="gameButton">Play Game</button></div>
-    </main>
-	<h2 id="message"></h2>
+    </main>	
     <footer>
         <p>Created with ❤️ by Marcelo Schatzolo</p>
     </footer>
@@ -142,12 +155,14 @@
                 heart.style.left = `${Math.random() * 100}%`;
                 heart.style.animationDuration = `${Math.random() * 6 + 5}s`; // Slower falling (5-10 seconds)
 
-                heart.addEventListener("click", function() {
-                    const message = messages[i];
-                    document.getElementById("message").textContent = message;
-                    heart.style.display = "none";
-                    document.getElementById("message").style.display = "block";
-                });
+                heart.addEventListener("click", function () {
+					const message = messages[i];
+					const messageElement = document.getElementById("message");
+
+					messageElement.textContent = message;
+					messageElement.classList.add("active"); // Add the 'active' class
+					heart.style.display = "none";
+				});
 
                 game.appendChild(heart);
             }
