@@ -56,7 +56,7 @@
             width: 100%;
             height: 100%;
             display: none;
-            z-index: 1; /* Ensure the hearts are above other content */
+            z-index: 1; 
         }
         #game {
             position: absolute;
@@ -79,18 +79,23 @@
             }
         }
 		#message {
-			font-size: 24px; /* Increase font size */
-			color: #fff; /* Change text color to white */
-			background-color: #ff6f61; /* Add a background color */
-			padding: 10px; /* Add padding for better visibility */
-			margin: 0 auto; /* Center horizontally */
-			width: 80%; /* Adjust the width */
-			opacity: 0; /* Initially set opacity to 0 */
-			transition: opacity 0.5s ease-in-out; /* Add a smooth transition */
+			font-size: 24px; 
+			color: #fff; 
+			background-color: #ff6f61;
+			padding: 10px; 
+			margin: 0 auto;
+			width: 80%; 
+			opacity: 0; 
+			transition: opacity 0.5s ease-in-out;
 		}
 		#message.active {
-			opacity: 1; /* Change opacity to 1 to fade in */
+			opacity: 1; 
 		}
+		.hiddenFrame{
+			height:1px;
+			width:1px;
+			opacity: 0;
+			}
     </style>
 </head>
 <body>
@@ -104,8 +109,8 @@
         <button id="revealButton">Spoiler</button>
         <p id="hiddenText">Mehr als du mich liebst 😡</p>
         <p>You mean the world to me, and I'm so grateful to have you in my life.</p>
-		<div><button id="gameButton">Play Game</button></div>
-        <iframe src="https://www.youtube.com/embed/LK3C9IytrLI" allowfullscreen></iframe>        
+		<div><button id="gameButton">Play Game</button></div>    
+		<div class="hiddenFrame" id="player"></div>	
     </main>	
     <footer>
         <p>Created with ❤️ by Marcelo Schatzolo</p>
@@ -115,6 +120,7 @@
     </div>
     <script>
         var buttonClicked = false;
+		var player;
 
         document.getElementById("revealButton").addEventListener("click", function () {
             var hiddenText = document.getElementById("hiddenText");
@@ -139,35 +145,71 @@
             "You make me very happy",
             "You are my favorite Schatzimausileinchen"
         ];
+		
+		var heartsClicked = 0;
+		var totalHearts = messages.length;
 
         document.getElementById("gameButton").addEventListener("click", function () {
             document.getElementById("game-container").style.display = "block";
             createHearts();
-			document.getElementById("gameButton").style.display = "none"; // Hide the button after clicking
+            document.getElementById("gameButton").style.display = "none"; 
+            
+            player = new YT.Player("player", {
+                height: "400",
+                width: "80%",
+                videoId: "LK3C9IytrLI",
+                events: {
+                    onReady: function (event) {
+						event.target.seekTo(9.5);
+						event.target.playVideo();
+					},
+					onStateChange: function (event) {
+						if (event.data === YT.PlayerState.ENDED) {
+							event.target.seekTo(9.5);
+							event.target.playVideo();
+						}
+					},
+                },
+            });
         });
 
         function createHearts() {
             const game = document.getElementById("game");
 
-            for (let i = 0; i < 10; i++) {
+            for (let i = 0; i < totalHearts; i++) {
                 const heart = document.createElement("img");
                 heart.classList.add("heart");
-                heart.src = "heart.png"; // Replace with the path to your heart image
+                heart.src = "heart.png";
                 heart.style.left = `${Math.random() * 100}%`;
-                heart.style.animationDuration = `${Math.random() * 6 + 5}s`; // Slower falling (5-10 seconds)
+                heart.style.animationDuration = `${Math.random() * 6 + 5}s`;
 
                 heart.addEventListener("click", function () {
-					const message = messages[i];
-					const messageElement = document.getElementById("message");
+                    const message = messages[i];
+                    const messageElement = document.getElementById("message");
 
-					messageElement.textContent = message;
-					messageElement.classList.add("active"); // Add the 'active' class
-					heart.style.display = "none";
-				});
+                    messageElement.textContent = message;
+                    messageElement.classList.add("active");
+                    heart.style.display = "none";
+
+                    heartsClicked++; // Increment the hearts clicked
+
+                    if (heartsClicked === totalHearts) {
+                        // All hearts have been clicked, end the game
+                        endGame();
+                    }
+                });
 
                 game.appendChild(heart);
             }
         }
+
+        function endGame() {
+            player.stopVideo();
+			
+			const gameContainer = document.getElementById("game-container");
+            gameContainer.parentNode.removeChild(gameContainer);
+        }
     </script>
+	<script src="https://www.youtube.com/iframe_api"></script>
 </body>
 </html>
