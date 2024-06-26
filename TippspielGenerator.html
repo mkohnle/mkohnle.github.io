@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tippspiel Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f0f0f0;
+            margin: 20px auto;
+            padding: 20px;
+            text-align: center;     
+            width: 50%;       
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .container {      
+            margin-bottom: 20px;
+            margin-top: 20px;
+            text-align: left;
+            padding-left: calc(50% / 2);
+        }
+
+        .input-container {
+            margin-bottom: 20px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input[type="text"], input[type="range"], button {            
+            font-size: 1em;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-right: 10px;
+        }
+
+        input[type="text"] {
+            padding: 8px;
+            width: 300px;
+        }
+
+        button {
+            padding: 8px;
+            width: 100px;
+            height: 50px;
+        }
+
+        input[type="range"] {
+            width: 200px;
+        }
+
+        #matchesValue, #percentageValue {
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        button {
+            background-color: #4c7bb1;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #5c85b3;
+        }
+
+        #results {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: #fff;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        #results span {
+            font-weight: bold;
+        }
+
+    </style>
+    <script>
+        function handleKeyPress(event) {
+            if (event.keyCode === 13) {
+                generate();
+            }
+        }
+        
+        function generate() {
+            const inputField = document.getElementById('quoteInput');
+            const matchesField = document.getElementById('matchesInput');
+            const percentageField = document.getElementById('percentageInput');
+            const resultField = document.getElementById('results');
+
+            let matches = parseInt(matchesField.value, 10);
+            let filterPercentage = parseFloat(percentageField.value) / 100;
+
+            if (isNaN(matches) || matches <= 0 || isNaN(filterPercentage) || filterPercentage <= 0 || filterPercentage >= 1) {
+                resultField.innerHTML = "Ungültige Eingabe.";
+                return;
+            }
+
+            let results = [];
+            let quote = inputField.value.replace(/\s+/g, '');
+
+            let weights = quote.split("/").map(parseFloat);
+
+            if (!/^\d+(\.\d+)?\/\d+(\.\d+)?\/\d+(\.\d+)?$/.test(quote) || weights.some(isNaN) || weights.length !== 3 || weights.some(weight => weight <= 0)) {
+                resultField.innerHTML = "Ungültige Eingabe. Drei durch '/' getrennte positive Zahlen eingeben.";
+                return;
+            }
+
+            resultField.innerHTML = "Quote: " + weights.join(", ") + "<br>";
+
+            let probabilities = weights.map(weight => 1 / weight);
+            let total = probabilities.reduce((a, b) => a + b, 0);
+            probabilities = probabilities.map(prob => prob / total);
+            let percentages = probabilities.map(prob => prob * 100);
+
+            let diff = Math.abs(percentages[0] - percentages[2]);
+            let outcomes = ["Heimsieg", "Unentschieden", "Auswärtssieg"];
+            let odds = [];
+
+            percentages.forEach((percentage, i) => {
+                odds.push(percentage);
+                resultField.innerHTML += `${outcomes[i]}: ${percentage.toFixed(2)}%<br>`;
+            });
+
+            let goalWeights = [4, 5, 5, 1.5, 0.25, 0.1, 0.01, 0.001, 0];
+            let goalWeightsWinner = [...goalWeights];
+            let goalWeightsLoser = [...goalWeights];
+
+            for (let i = 1; i < goalWeightsWinner.length; i++) {
+                goalWeightsWinner[i] *= (i * (diff / 100)) + 1;
+                goalWeightsLoser[i] /= (i * (diff / 100)) + 1;
+            }
+
+            let homeWins = 0;
+            let draws = 0;
+            let awayWins = 0;
+
+            for (let i = 0; i < matches; i++) {
+                let outcome = weightedRandom([0, 1, 2], odds);
+                let homeGoals;
+                let awayGoals;
+
+                if (outcome === 0) { // home win
+                    homeGoals = weightedRandom([...Array(goalWeightsWinner.length).keys()].slice(1), goalWeightsWinner.slice(0, -1));
+                    awayGoals = weightedRandom([...Array(homeGoals).keys()], goalWeightsLoser.slice(0, goalWeightsLoser.length - homeGoals));
+                    homeWins += 1;
+                } else if (outcome === 1) { // draw
+                    homeGoals = weightedRandom([...Array(goalWeights.length).keys()], goalWeights);
+                    awayGoals = homeGoals;
+                    draws += 1;
+                } else { // away win
+                    awayGoals = weightedRandom([...Array(goalWeightsWinner.length).keys()].slice(1), goalWeightsWinner.slice(0, -1));
+                    homeGoals = weightedRandom([...Array(awayGoals).keys()], goalWeightsLoser.slice(0, goalWeightsLoser.length - awayGoals));
+                    awayWins += 1;
+                }
+
+                if (homeGoals === undefined) homeGoals = 0;
+                if (awayGoals === undefined) awayGoals = 0;
+
+                results.push(`${homeGoals}:${awayGoals}`);
+            }
+
+            let resultCounts = results.reduce((acc, result) => {
+                acc[result] = (acc[result] || 0) + 1;
+                return acc;
+            }, {});
+
+            let filteredResults = Object.keys(resultCounts).filter(result => resultCounts[result] / matches > filterPercentage);
+
+            if (filteredResults.length > 0) {
+                let randomResult = filteredResults[Math.floor(Math.random() * filteredResults.length)];
+                let probabilityOfRandomResult = resultCounts[randomResult] / matches;
+                resultField.innerHTML += `<br><span style="color: green;">Ergebnis: ${randomResult} - ${(probabilityOfRandomResult * 100).toFixed(2)}%</span><br>`;
+            } else {
+                resultField.innerHTML += `<br><span style="color: red;">Kein Ergebnis</span><br>`;
+            }
+
+            let mostCommonResult = Object.entries(resultCounts).reduce((a, b) => b[1] > a[1] ? b : a);
+            resultField.innerHTML += `<br>Häufigstes Ergebnis aus ${matches}: ${mostCommonResult[0]} mit ${mostCommonResult[1]} Vorkommnissen<br>`;
+            resultField.innerHTML += `Heimsiege: ${homeWins}<br>`;
+            resultField.innerHTML += `Unentschieden: ${draws}<br>`;
+            resultField.innerHTML += `Auswärtssiege: ${awayWins}<br>`;
+        }
+
+        function weightedRandom(items, weights) {
+            let total = weights.reduce((a, b) => a + b, 0);
+            if (total === 0) return undefined;
+            let random = Math.random() * total;
+            for (let i = 0; i < items.length; i++) {
+                if (random < weights[i]) {
+                    return items[i];
+                }
+                random -= weights[i];
+            }
+        }                 
+    </script>
+</head>
+<body>
+    <h1>Tippspiel Generator</h1>    
+    <div class="input-container">
+        <input type="text" id="quoteInput" placeholder="Quote eingeben (z.B. 5 / 3.50 / 1.75)" onkeypress="handleKeyPress(event)">
+    <div class="container">
+        <div>
+        <label for="matchesInput">Anzahl der Spiele:</label>
+        <input type="range" id="matchesInput" value="10000" min="1" max="10000" oninput="matchesValue.innerHTML = matchesInput.value" onkeypress="handleKeyPress(event)">
+        <span id="matchesValue">10000</span>
+        </div>
+        <div>
+        <label for="percentageInput">Wahrscheinlichkeit:</label>
+        <input type="range" id="percentageInput" value="7" min="1" max="15" step="0.1" oninput="percentageValue.innerHTML = percentageInput.value" onkeypress="handleKeyPress(event)">
+        <span id="percentageValue">7</span>%
+        </div>
+    </div> 
+        <button id="generate" onclick="generate()">Generieren</button>
+    </div>       
+    <div id="results"></div>
+</body>
+</html>
